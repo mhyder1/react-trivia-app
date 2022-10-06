@@ -1,0 +1,39 @@
+import { useState, useEffect } from 'react';
+// API - https://opentdb.com/api.php?amount=5&category=11&type=multiple
+function App() {
+  // create state to hold my quiz data
+  const [quizData, setQuizData] = useState([]);
+
+  useEffect(() => {
+    fetch('data.json')
+      .then((res) => res.json())
+      .then((data) => setQuizData(data.results));
+  }, []);
+
+  //console.log(quizData);
+
+  //map over quiz data to get questions
+
+  const quizQuestions = quizData.map((quizItem) => {
+    return (
+      <div className="question-el">
+        <h2 className="question-item">{quizItem.question}</h2>
+        <ul className="answer-item">
+          <li>{quizItem.correct_answer}</li>
+          <li>{quizItem.incorrect_answers[0]}</li>
+          <li>{quizItem.incorrect_answers[1]}</li>
+          <li>{quizItem.incorrect_answers[2]}</li>
+        </ul>
+      </div>
+    );
+  });
+
+  return (
+    <div className="quiz-el">
+      {quizQuestions}
+      <button className="quiz-submit-btn">Check Answers</button>
+    </div>
+  );
+}
+
+export default App;
