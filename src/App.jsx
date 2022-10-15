@@ -4,7 +4,7 @@ function App() {
   // create state to hold my quiz data
   const [quizData, setQuizData] = useState([]);
   const [score, setScore] = useState(0);
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState();
 
   useEffect(() => {
     fetch('data.json')
@@ -12,9 +12,24 @@ function App() {
       .then((data) => setQuizData(data.results));
   }, []);
 
+  function scoreQuiz() {
+    // take form data
+    // You scored 3/5 correct answers
+    // filter out true answers
+    const rightAnswers = Object.entries(formData).filter((rightItems) => {
+      rightItems.data === true;
+    });
+    console.log(rightAnswers);
+    return setScore(rightAnswers.length);
+  }
+
   function handleChange(event) {
     const { name, value, dataset } = event.target;
     setFormData((prevFormData) => {
+      // Set score if answer is true
+      if (dataset.answer === 'true') {
+        setScore(score + 1);
+      }
       return {
         ...prevFormData,
         [name]: {
@@ -26,9 +41,8 @@ function App() {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+    console.log('formData', formData);
   }
-  // className="answer-item"
   //map over quiz data to get questions
   const quizQuestions = quizData.map((quizItem, index) => {
     return (
@@ -37,7 +51,7 @@ function App() {
         <div className="answer-item">
           <input
             id={quizItem.correct_answer}
-            data-answer="right"
+            data-answer={true}
             type="radio"
             name={index}
             value={quizItem.correct_answer}
@@ -50,7 +64,7 @@ function App() {
         <div className="answer-item">
           <input
             id={quizItem.incorrect_answers[0]}
-            data-answer="wrong"
+            data-answer={false}
             type="radio"
             name={index}
             value={quizItem.incorrect_answers[0]}
@@ -64,7 +78,7 @@ function App() {
           <input
             id={quizItem.incorrect_answers[1]}
             className="answer-item"
-            data-answer="wrong"
+            data-answer={false}
             type="radio"
             name={index}
             value={quizItem.incorrect_answers[1]}
@@ -78,7 +92,7 @@ function App() {
           <input
             id={quizItem.incorrect_answers[2]}
             className="answer-item"
-            data-answer="wrong"
+            data-answer={false}
             type="radio"
             name={index}
             value={quizItem.incorrect_answers[2]}
@@ -102,6 +116,7 @@ function App() {
             Check Answers
           </button>
         </form>
+        <p>You scored {score}/5 correct answers</p>
       </div>
     </>
   );

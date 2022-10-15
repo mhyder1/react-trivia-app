@@ -61,7 +61,15 @@ input[type=radio]+label {
 
 
 input[type=radio]:checked+label {
+  background-color: #D6DBF5;
+}
+
+.right-answer {
   background-color: #94D7A2;
+}
+
+.wrong-answer {
+  background-color: #F8BCBC;
 }
 
 input[type=radio]+label:hover {
