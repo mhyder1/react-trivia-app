@@ -4,6 +4,7 @@ function App() {
   // create state to hold my quiz data
   const [quizData, setQuizData] = useState([]);
   const [score, setScore] = useState(0);
+  const [formData, setFormData] = useState([]);
 
   useEffect(() => {
     fetch('data.json')
@@ -31,8 +32,8 @@ function App() {
   //map over quiz data to get questions
   const quizQuestions = quizData.map((quizItem, index) => {
     return (
-      <div class="question-el">
-        <h3>{quizItem.question}</h3>
+      <div className="question-el">
+        <h3 className="question-item">{quizItem.question}</h3>
         <div className="answer-item">
           <input
             id={quizItem.correct_answer}
@@ -95,7 +96,7 @@ function App() {
     <>
       <h1 className="page-title">Trivia Time</h1>
       <div className="quiz-el">
-        <form>
+        <form onSubmit={handleSubmit}>
           {quizQuestions}
           <button type="submit" className="quiz-submit-btn">
             Check Answers
