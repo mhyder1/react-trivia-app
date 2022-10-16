@@ -5,23 +5,13 @@ function App() {
   const [quizData, setQuizData] = useState([]);
   const [score, setScore] = useState(0);
   const [formData, setFormData] = useState();
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     fetch('data.json')
       .then((res) => res.json())
       .then((data) => setQuizData(data.results));
   }, []);
-
-  function scoreQuiz() {
-    // take form data
-    // You scored 3/5 correct answers
-    // filter out true answers
-    const rightAnswers = Object.entries(formData).filter((rightItems) => {
-      rightItems.data === true;
-    });
-    console.log(rightAnswers);
-    return setScore(rightAnswers.length);
-  }
 
   function handleChange(event) {
     const { name, value, dataset } = event.target;
@@ -42,6 +32,7 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault();
     console.log('formData', formData);
+    setSubmitted(true);
   }
   //map over quiz data to get questions
   const quizQuestions = quizData.map((quizItem, index) => {
@@ -105,18 +96,24 @@ function App() {
       </div>
     );
   });
-  //console.log(quizQuestions);
+
   return (
     <>
       <h1 className="page-title">Trivia Time</h1>
       <div className="quiz-el">
         <form onSubmit={handleSubmit}>
           {quizQuestions}
-          <button type="submit" className="quiz-submit-btn">
-            Check Answers
-          </button>
+          {submitted ? (
+            <>
+              <button className="play-again-btn">Play Again</button>
+              <h3 className="title">You scored {score}/5 correct answers</h3>
+            </>
+          ) : (
+            <button type="submit" className="quiz-submit-btn">
+              Check Answers
+            </button>
+          )}
         </form>
-        <p>You scored {score}/5 correct answers</p>
       </div>
     </>
   );

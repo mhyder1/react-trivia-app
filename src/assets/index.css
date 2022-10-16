@@ -26,7 +26,8 @@ body {
 .question-item,
 .answers-item,
 .answer-active,
-.page-title {
+.page-title,
+.title {
   color: #293264
 }
 
@@ -76,11 +77,15 @@ input[type=radio]+label:hover {
   background-color: #D6DBF5;
 }
 
-.quiz-submit-btn {
+.quiz-submit-btn,
+.play-again-btn {
   margin: 50px auto;
   display: block;
 }
 
+.title {
+  text-align: center;
+}
 
 button {
   background-color: #4D5B9E;
