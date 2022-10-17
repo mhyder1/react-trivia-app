@@ -24,6 +24,10 @@ export default function Inputs({ incorrect, correct, index, submitted, selected,
         }
     }
 
+    function isCorrect(value) {
+        return typeof value === 'string' ? true : false
+    }
+
     return (
         <>
             <div className="answer-item">
@@ -33,7 +37,7 @@ export default function Inputs({ incorrect, correct, index, submitted, selected,
                     name={index}
                     value={correct}
                     onChange={handleChange}
-                    data-correct={true}
+                    data-correct={isCorrect(correct)}
                 />
                 <label htmlFor={correct} style={{ background: hilight(correct) }}>
                     {correct}
@@ -46,7 +50,7 @@ export default function Inputs({ incorrect, correct, index, submitted, selected,
                     name={index}
                     value={incorrect[0]}
                     onChange={handleChange}
-                    data-correct={false}
+                    data-correct={isCorrect(incorrect)}
                 />
                 <label htmlFor={incorrect[0]} style={{ background: hilight(incorrect[0]) }}>
                     {incorrect[0]}
@@ -59,7 +63,7 @@ export default function Inputs({ incorrect, correct, index, submitted, selected,
                     name={index}
                     value={incorrect[1]}
                     onChange={handleChange}
-                    data-correct={false}
+                    data-correct={isCorrect(incorrect)}
                 />
                 <label htmlFor={incorrect[1]} style={{ background: hilight(incorrect[1]) }}>
                     {incorrect[1]}
@@ -72,7 +76,7 @@ export default function Inputs({ incorrect, correct, index, submitted, selected,
                     name={index}
                     value={incorrect[2]}
                     onChange={handleChange}
-                    data-correct={false}
+                    data-correct={isCorrect(incorrect)}
                 />
                 <label htmlFor={incorrect[2]} style={{ background: hilight(incorrect[2]) }}>
                     {incorrect[2]}
