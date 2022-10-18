@@ -9,13 +9,15 @@ function App() {
   const [selected, setSelected] = useState({})
 
   useEffect(() => {
-    fetch('data.json')
+    // fetch('data.json')
+    fetch('https://opentdb.com/api.php?amount=5&category=11&type=multiple')
       .then((res) => res.json())
       .then((data) => setQuizData(data.results));
   }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
+    console.log(selected)
     setSubmitted(true);
   }
 
